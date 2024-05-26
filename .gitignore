@@ -3,5 +3,7 @@
 *.txt
 *.png
 *.csv
+*.npz
+*.tar
 # CACHE_DIR/
 # WORK_SPACE/
