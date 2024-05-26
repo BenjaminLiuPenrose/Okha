@@ -2,3 +2,5 @@
 *.feather
 *.txt
 *.png
+# CACHE_DIR/
+# WORK_SPACE/
