@@ -10,6 +10,9 @@ from Data import equity_data as eqd
 from Data import crypto_data as cpd
 from Misc import utilities as ut
 from Misc.config import IS_CRYPTO
+if IS_CRYPTO:
+    dcf.STOCKS_SAVEPATH = dcf.CRYPTOS_SAVEPATH
+    
 
 class EquityDataset(Dataset):
     def __init__(

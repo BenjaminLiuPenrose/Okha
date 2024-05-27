@@ -19,7 +19,7 @@ class PortfolioManager(object):
         portfolio_dir: str,
         # start_year=2001,
         # end_year=2019,
-        start_year=2023,
+        start_year=2023, ### TODO
         end_year=2024,
         country="USA",
         delay_list=None,

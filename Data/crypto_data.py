@@ -4,7 +4,7 @@ import os.path as op
 import numpy as np
 import pandas as pd
 import time
-from Data import dgp_config as dcf
+# from Data import dgp_config as dcf
 
 def bruteforece_convert(df):
     """ bruteforece_convert( pd.read_csv("/Users/benjaminliu/GProject/Comanche/tests/rho202305202405.csv") )
@@ -31,15 +31,17 @@ def bruteforece_convert(df):
         """
     )
     df["Ret"] = df.groupby("token")["close"].pct_change()
-    df['next_1d_ret'] = df.groupby("token")["close"].pct_change(periods = -1)
-    df['next_7d_ret'] = df.groupby("token")["close"].pct_change(periods = -7)
-    df['next_30d_ret'] = df.groupby("token")["close"].pct_change(periods = -30)
-    df['next_180d_ret'] = df.groupby("token")["close"].pct_change(periods = -180)
-    df['next_360d_ret'] = df.groupby("token")["close"].pct_change(periods = -360)
+    df['next_1d_ret'] = -df.groupby("token")["close"].pct_change(periods = -1)
+    df['next_7d_ret'] = -df.groupby("token")["close"].pct_change(periods = -7)
+    df['next_30d_ret'] = -df.groupby("token")["close"].pct_change(periods = -30)
+    df['next_180d_ret'] = -df.groupby("token")["close"].pct_change(periods = -180)
+    df['next_360d_ret'] = -df.groupby("token")["close"].pct_change(periods = -360)
     df['next_week_ret'] = df['next_7d_ret']
     df['next_month_ret'] = df['next_30d_ret']
     df['next_quarter_ret'] = df['next_180d_ret']
     df['next_year_ret'] = df['next_360d_ret']
+    df['MarketCap'] = 100000
+    df['next_week_ret_0delay'] = df['next_7d_ret']
     return df
 
 def get_processed_BFX_data_by_year(year):

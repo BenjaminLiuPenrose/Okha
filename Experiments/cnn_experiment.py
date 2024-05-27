@@ -780,6 +780,8 @@ class Experiment(object):
             whole_ensemble_res,
             self.pf_freq,
             self.pf_dir,
+            start_year=cf.OOS_YEARS[0],
+            end_year=cf.OOS_YEARS[-1],
             country=self.country,
             delay_list=delay_list,
             load_signal=load_signal,

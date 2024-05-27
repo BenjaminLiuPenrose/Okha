@@ -50,6 +50,28 @@ if __name__ == "__main__":
         pf_delay_list=[0],
         lr=1e-4,
     )
+    train_us_model(
+        [30],
+        [30],
+        total_worker=1,
+        calculate_portfolio=True,
+        ts1d_model=False,
+        ts_scale="image_scale",
+        regression_label=None,
+        pf_delay_list=[0],
+        lr=1e-4,
+    )
+    train_us_model(
+        [30],
+        [90],
+        total_worker=1,
+        calculate_portfolio=True,
+        ts1d_model=False,
+        ts_scale="image_scale",
+        regression_label=None,
+        pf_delay_list=[0],
+        lr=1e-4,
+    )
     # train_us_model(
     #     [20],
     #     [5],

@@ -69,11 +69,16 @@ class GenerateStockData(object):
 
         self.df = None
         self.stock_id_list = None
-
-        self.save_dir = ut.get_dir(
-            op.join(dcf.STOCKS_SAVEPATH, f"stocks_{self.country}/dataset_all")
-        )
-        self.image_save_dir = ut.get_dir(op.join(dcf.STOCKS_SAVEPATH, "sample_images"))
+        if IS_CRYPTO:
+            self.save_dir = ut.get_dir(
+                op.join(dcf.CRYPTOS_SAVEPATH, f"stocks_{self.country}/dataset_all")
+            )
+            self.image_save_dir = ut.get_dir(op.join(dcf.CRYPTOS_SAVEPATH, "sample_images"))
+        else:
+            self.save_dir = ut.get_dir(
+                op.join(dcf.STOCKS_SAVEPATH, f"stocks_{self.country}/dataset_all")
+            )
+            self.image_save_dir = ut.get_dir(op.join(dcf.STOCKS_SAVEPATH, "sample_images"))
         vb_str = "has_vb" if self.volume_bar else "no_vb"
         ohlc_len_str = "" if self.chart_freq == 1 else f"_{self.chart_len}ohlc"
         chart_type_str = "" if self.chart_type == "bar" else f"{self.chart_type}_"
