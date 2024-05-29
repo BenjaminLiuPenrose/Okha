@@ -23,8 +23,8 @@ if not os.path.isdir(PORTFOLIO):
 BAR_WIDTH = 3
 LINE_WIDTH = 1
 if IS_CRYPTO:
-    IMAGE_WIDTH = {7: BAR_WIDTH * 7, 30: BAR_WIDTH *30, 90: BAR_WIDTH * 90}
-    IMAGE_HEIGHT = {7: 32, 30: 64, 90: 96}
+    IMAGE_WIDTH = {1: BAR_WIDTH * 1, 7: BAR_WIDTH * 7, 30: BAR_WIDTH *30, 90: BAR_WIDTH * 90}
+    IMAGE_HEIGHT = {1: 16, 7: 32, 30: 64, 90: 96}
 else:
     IMAGE_WIDTH = {5: BAR_WIDTH * 5, 20: BAR_WIDTH * 20, 60: BAR_WIDTH * 60}
     IMAGE_HEIGHT = {5: 32, 20: 64, 60: 96}
@@ -40,7 +40,7 @@ quarter := large
 FREQ_DICT = {5: "week", 20: "month", 60: "quarter", 65: "quarter", 260: "year"}
 # FREQ_DICT = {5: "month", 20: "month", 60: "month", 65: "month", 260: "month"}
 if IS_CRYPTO:
-    FREQ_DICT = {7: "week", 30: "month", 90: "quarter", 360: "year", 365: "year"}
+    FREQ_DICT = {1: "day", 7: "week", 30: "month", 90: "quarter", 360: "year", 365: "year"}
 else:
     FREQ_DICT = {5: "week", 20: "week", 60: "week", 65: "week", 260: "week"}
 

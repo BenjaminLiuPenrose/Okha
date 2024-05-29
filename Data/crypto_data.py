@@ -4,7 +4,7 @@ import os.path as op
 import numpy as np
 import pandas as pd
 import time
-# from Data import dgp_config as dcf
+from Data import dgp_config as dcf
 
 def bruteforece_convert(df):
     """ bruteforece_convert( pd.read_csv("/Users/benjaminliu/GProject/Comanche/tests/rho202305202405.csv") )
@@ -36,12 +36,18 @@ def bruteforece_convert(df):
     df['next_30d_ret'] = -df.groupby("token")["close"].pct_change(periods = -30)
     df['next_180d_ret'] = -df.groupby("token")["close"].pct_change(periods = -180)
     df['next_360d_ret'] = -df.groupby("token")["close"].pct_change(periods = -360)
+    df['next_day_ret'] = df['next_1d_ret']
     df['next_week_ret'] = df['next_7d_ret']
     df['next_month_ret'] = df['next_30d_ret']
     df['next_quarter_ret'] = df['next_180d_ret']
     df['next_year_ret'] = df['next_360d_ret']
     df['MarketCap'] = 100000
+    df['next_day_ret_0delay'] = df['next_1d_ret']
     df['next_week_ret_0delay'] = df['next_7d_ret']
+    df['next_month_ret_0delay'] = df['next_30d_ret']
+    df['next_quarter_ret_0delay'] = df['next_180d_ret']
+    df["Date"] = df["date"]
+    df["StockID"] = df["token"]
     return df
 
 def get_processed_BFX_data_by_year(year):
@@ -53,7 +59,7 @@ def get_processed_BFX_data_by_year(year):
 
 
 def get_spy_freq_rets(freq):
-    assert freq in ["week", "month", "quarter", "year"]
+    assert freq in ["week", "month", "quarter", "year", "day"]
     spy = pd.read_csv(
         os.path.join(dcf.CACHE_DIR, f"spy_{freq}_ret.csv"),
         parse_dates=["date"],
@@ -64,7 +70,7 @@ def get_spy_freq_rets(freq):
 
 
 def get_period_end_dates(period):
-    assert period in ["week", "month", "quarter", "year"]
+    assert period in ["week", "month", "quarter", "year", "day"]
     spy = get_spy_freq_rets(period)
     return spy.index
 
@@ -148,7 +154,7 @@ def process_raw_data_helper(df):
     df["EWMA_vol"] = df.groupby("StockID")["Ret"].transform(
         lambda x: (x**2).ewm(alpha=0.05).mean().shift(periods=1)
     )
-    for freq in ["week", "month", "quarter", "year"]:
+    for freq in ["week", "month", "quarter", "year", "day"]:
         period_end_dates = get_period_end_dates(freq)
         freq_df = df[df.index.get_level_values("Date").isin(period_end_dates)].copy()
         freq_df["freq_ret"] = freq_df.groupby("StockID")["cum_log_ret"].apply(
@@ -161,7 +167,7 @@ def process_raw_data_helper(df):
         df[f"Ret_{freq}"] = freq_df["freq_ret"]
         num_nan = np.sum(pd.isna(df[f"Ret_{freq}"]))
         print(f"df Ret_{freq} {len(df) - num_nan}/{len(df)} not nan")
-    for i in [5, 20, 60, 65, 180, 250, 260] + [7, 30, 90]:
+    for i in [5, 20, 60, 65, 180, 250, 260] + [1, 7, 30, 90]:
         print(f"Calculating {i}d return")
         df[f"Ret_{i}d"] = df.groupby("StockID")["cum_log_ret"].apply(
             lambda x: np.exp(x.shift(-i) - x) - 1
@@ -171,7 +177,7 @@ def process_raw_data_helper(df):
 
 def get_period_ret(period, country="USA"):
     assert country == "USA"
-    assert period in ["week", "month", "quarter"]
+    assert period in ["week", "month", "quarter", "day"]
     period_ret_path = op.join(dcf.CACHE_DIR, f"crypto_{period}_ret.pq")
     # period_ret = pd.read_parquet(period_ret_path)
     period_ret_path = op.join(dcf.CACHE_DIR, f"crypto_fut_ret.csv")

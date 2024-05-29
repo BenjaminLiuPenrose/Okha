@@ -19,8 +19,9 @@ IS_HF_CRYPTO = False
 BATCH_SIZE = 128
 TRUE_DATA_CNN_INPLANES = 64
 if IS_CRYPTO:
-    BENCHMARK_MODEL_LAYERNUM_DICT = {7: 2, 30: 3, 90: 4}
+    BENCHMARK_MODEL_LAYERNUM_DICT = {1: 2, 7: 2, 30: 3, 90: 4}
     EMP_CNN_BL_SETTING = {
+        1: ([(5, 3)] * 10, [(1, 1)] * 10, [(1, 1)] * 10, [(2, 1)] * 10),
         7: ([(5, 3)] * 10, [(1, 1)] * 10, [(1, 1)] * 10, [(2, 1)] * 10),
         30: (
             [(5, 3)] * 10,
@@ -36,8 +37,9 @@ if IS_CRYPTO:
         ),
     }
 
-    TS1D_LAYERNUM_DICT = {7: 1, 30: 2, 90: 3}
+    TS1D_LAYERNUM_DICT = {1: 1, 7: 1, 30: 2, 90: 3}
     EMP_CNN1d_BL_SETTING = {
+        1: ([3] * 1, [1] * 1, [1] * 1, [2] * 1),
         7: ([3] * 1, [1] * 1, [1] * 1, [2] * 1),
         30: ([3] * 2, [1] * 2, [1] * 2, [2] * 2),
         90: ([3] * 3, [1] * 3, [1] * 3, [2] * 3),
