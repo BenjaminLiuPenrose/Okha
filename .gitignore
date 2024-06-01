@@ -5,6 +5,11 @@
 *.csv
 *.npz
 *.tar
+*.pkl
 !requirements.txt
+!WORK_SPACE/data/cryptos_dataset/raw_data/rho202305202405.csv
+!CACHE_DIR/crypto_fut_ret.csv
+!CACHE_DIR/spy_day_ret.csv
+
 # CACHE_DIR/
 # WORK_SPACE/
