@@ -27,7 +27,7 @@ class PortfolioManager(object):
         custom_ret=None,
         transaction_cost=False,
     ):
-        assert freq in ["week", "month", "quarter"]
+        assert freq in ["week", "month", "quarter", "day"]
         self.freq = freq
         self.portfolio_dir = portfolio_dir
         self.start_year = start_year

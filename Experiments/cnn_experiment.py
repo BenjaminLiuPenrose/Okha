@@ -61,7 +61,7 @@ class Experiment(object):
         self.pw = pw
         self.model_obj = model_obj
         self.train_freq = train_freq
-        assert self.train_freq in ["week", "month", "quarter", "year"]
+        assert self.train_freq in ["week", "month", "quarter", "year", "day"]
         self.ensem = ensem
         self.lr = lr
         self.drop_prob = drop_prob
@@ -89,10 +89,10 @@ class Experiment(object):
         self.annual_stocks_num = annual_stocks_num
         self.tstat_threshold = tstat_threshold
         self.ohlc_len = self.ws if ohlc_len is None else ohlc_len
-        assert self.ohlc_len in [5, 20, 60] + [7, 30, 90]
+        assert self.ohlc_len in [5, 20, 60] + [1, 7, 30, 90]
         self.mean_std = None
         self.pf_freq = dcf.FREQ_DICT[self.pw] if pf_freq is None else pf_freq
-        assert self.pf_freq in ["week", "month", "quarter", "year"]
+        assert self.pf_freq in ["week", "month", "quarter", "year", "day"]
         self.tensorboard = tensorboard
         self.weight_decay = weight_decay
         self.margin = margin

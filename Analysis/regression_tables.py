@@ -204,7 +204,7 @@ def cnn_pred_on_monthly_stock_char(pw, regression_type):
         "Illiquidity",
     ]
     if IS_CRYPTO:
-        wsls = [7, 30, 90]
+        wsls = [7, 30, 90] + 1
     else:
         wsls = [5, 20, 60]
     for ws in wsls:
@@ -238,7 +238,7 @@ def cnn_and_ret_and_stock_char_regression(
     regression_type="logit",
 ):
     if IS_CRYPTO:
-        ws_list=[7, 30, 90]
+        ws_list=[7, 30, 90] + [1]
     else:
         ws_list=[5, 20, 60]
     stock_chars = [
@@ -343,7 +343,7 @@ def regress_ret_on_cnn_pred_and_raw_image_data(
     pw_list=[5, 20, 60],
 ):
     if IS_CRYPTO:
-        pw_list=[7, 30, 90]
+        pw_list=[7, 30, 90] + [1]
     else:
         pw_list=[5, 20, 60]
     assert regression_type in ["logit", "ols"]
@@ -443,7 +443,7 @@ def regress_ret_on_cnn_pred_and_raw_image_data(
 
 def regression_on_market_data_combined(ws, regression_type, pw_list=[5, 20, 60]):
     if IS_CRYPTO:
-        pw_list=[7, 30, 90]
+        pw_list=[7, 30, 90] + [1]
     else:
         pw_list=[5, 20, 60]
     x_cols = [

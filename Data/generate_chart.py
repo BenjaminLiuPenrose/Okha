@@ -13,6 +13,7 @@ from Data import chart_library as cl
 from Data import dgp_config as dcf
 from Misc import utilities as ut
 from Misc.config import IS_CRYPTO
+### const 365
 
 class ChartGenerationError(Exception):
     pass
@@ -36,11 +37,11 @@ class GenerateStockData(object):
         self.year = year
         self.window_size = window_size
         self.freq = freq
-        assert self.freq in ["week", "month", "quarter"]
+        assert self.freq in ["week", "month", "quarter", "day"]
         self.chart_freq = chart_freq
         assert window_size % chart_freq == 0
         self.chart_len = int(window_size / chart_freq)
-        assert self.chart_len in [5, 20, 60] + [7, 30, 90]
+        assert self.chart_len in [5, 20, 60] + [1, 7, 30, 90]
         self.ma_lags = ma_lags
         self.volume_bar = volume_bar
         self.need_adjust_price = need_adjust_price
@@ -48,7 +49,7 @@ class GenerateStockData(object):
         assert chart_type in ["bar", "pixel", "centered_pixel"]
         self.chart_type = chart_type
 
-        self.ret_len_list = [5, 20, 60, 65, 180, 250, 260] + [7, 30, 90]
+        self.ret_len_list = [5, 20, 60, 65, 180, 250, 260] + [1, 7, 30, 90]
         self.bar_width = 3
         self.image_width = {
             5: self.bar_width * 5,
@@ -241,6 +242,7 @@ class GenerateStockData(object):
                 "Ret_month",
                 "Ret_quarter",
                 "Ret_year",
+                "Ret_day",
                 "MarketCap",
             ]
             + [f"Ret_{i}d" for i in self.ret_len_list]
@@ -287,12 +289,14 @@ class GenerateStockData(object):
         self.stock_id_list = np.unique(self.df.index.get_level_values("StockID"))
         dtype_dict, feature_list = self._get_feature_and_dtype_list()
         data_miss = np.zeros(6)
+        const = 365 #60
+        # const = 60
         data_dict = {
-            feature: np.empty(len(self.stock_id_list) * 60, dtype=dtype_dict[feature])
+            feature: np.empty(len(self.stock_id_list) * const, dtype=dtype_dict[feature])
             for feature in feature_list
         }
         data_dict["image"] = np.empty(
-            [len(self.stock_id_list) * 60, self.width * self.height],
+            [len(self.stock_id_list) * const, self.width * self.height],
             dtype=dtype_dict["image"],
         )
         data_dict["image"].fill(np.nan)
@@ -329,6 +333,7 @@ class GenerateStockData(object):
                             image_label_data["image"].tobytes(), dtype=np.uint8
                         )
                         assert im_arr.size == self.width * self.height
+                        # from pdb import set_trace; set_trace()
                         data_dict["image"][sample_num, :] = im_arr[:]
                         for feature in [x for x in feature_list if x != "image"]:
                             data_dict[feature][sample_num] = image_label_data[feature]

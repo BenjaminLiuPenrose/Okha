@@ -12,7 +12,7 @@ from Misc import utilities as ut
 from Misc.config import IS_CRYPTO
 if IS_CRYPTO:
     dcf.STOCKS_SAVEPATH = dcf.CRYPTOS_SAVEPATH
-    
+
 
 class EquityDataset(Dataset):
     def __init__(
@@ -36,10 +36,10 @@ class EquityDataset(Dataset):
         self.ws = window_size
         self.pw = predict_window
         self.freq = freq
-        assert self.freq in ["week", "month", "quarter", "year"]
+        assert self.freq in ["week", "month", "quarter", "year", "day"]
         self.year = year
         self.ohlc_len = ohlc_len if ohlc_len is not None else window_size
-        assert self.ohlc_len in [5, 20, 60] + [7, 30, 90]
+        assert self.ohlc_len in [5, 20, 60] + [1, 7, 30, 90]
         self.data_freq = self.freq if self.ohlc_len == self.ws else "month"
         self.country = country
         self.has_vb = has_volume_bar
@@ -54,6 +54,7 @@ class EquityDataset(Dataset):
         self.images, self.label_dict = self.load_images_and_labels_by_country(
             self.country
         )
+        # from pdb import set_trace; set_trace()
 
         self.demean = self._get_insample_mean_std()
 
@@ -253,7 +254,7 @@ class EquityDataset(Dataset):
             image_name=self.__get_stock_dataset_name(),
             par_save_dir=self.save_dir,
         )
-
+        # from pdb import set_trace; set_trace()
         label_df = pd.read_feather(label_path)
         label_df["StockID"] = label_df["StockID"].astype(str)
         label_dict = {c: np.array(label_df[c]) for c in label_df.columns}

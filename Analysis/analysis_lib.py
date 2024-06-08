@@ -12,7 +12,7 @@ from Misc.config import IS_CRYPTO
 
 
 def portfolio_performance_helper(ws: int, pw: int):
-    assert ws in [5, 20, 60] + [7, 30, 90] and pw in [5, 20, 60] + [7, 30, 90] 
+    assert ws in [5, 20, 60] + [1, 7, 30, 90] and pw in [5, 20, 60] + [1, 7, 30, 90] 
     freq = FREQ_DICT[pw]
     signal_df = pd.read_csv(CACHE_DIR / f"{freq}ly_prediction_with_rets.csv")
     signal_df["Date"] = pd.to_datetime(signal_df["Date"], dayfirst=True)
@@ -52,8 +52,8 @@ def corr_between_cnn_pred_and_stock_chars():
     df = pd.DataFrame(columns=stock_chars)
     stock_char_df = load_cnn_and_monthly_stock_char("oos")
     if IS_CRYPTO:
-        wsls = [7, 30, 90]
-        pwls = [7, 30, 90]
+        wsls = [7, 30, 90] + [1]
+        pwls = [7, 30, 90] + [1]
     else:
         wsls = [5, 20, 60]
         pwls = [5, 20, 60]  
@@ -98,7 +98,7 @@ def cnn_vs_linear_table_ols(pw):
     ]
     df = pd.DataFrame(columns=col_index, index=idx)
     if IS_CRYPTO:
-        wsls = [7, 30, 90]
+        wsls = [7, 30, 90] + [1]
     else:
         wsls = [5, 20, 60]
     for ws in :
@@ -150,7 +150,7 @@ def load_international_portfolio_returns(horizon, country, weight_type, transfer
 
 
 def calculate_portfolio_sr(portfolio_ret, horizon):
-    assert horizon in [5, 20, 60] + [7, 30, 90]
+    assert horizon in [5, 20, 60] + [1, 7, 30, 90]
     avg = portfolio_ret["H-L"].mean()
     std = portfolio_ret["H-L"].std()
     if IS_CRYPTO:

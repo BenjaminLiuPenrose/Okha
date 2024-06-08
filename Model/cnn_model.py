@@ -143,10 +143,12 @@ class Model(object):
         if self.ts1d_model:
             input_size_dict = {5: (6, 5), 20: (6, 20), 60: (6, 60),
                7: (6, 7), 30: (6, 30), 90: (6, 90), 
+               1: (6, 1),
             }
         else:
             input_size_dict = {5: (32, 15), 20: (64, 60), 60: (96, 180),
                 7: (32, 21), 30: (64, 90), 90: (96, 270),
+               1: (16, 3),
             }
         return input_size_dict[self.ws]
 
@@ -155,10 +157,12 @@ class Model(object):
         if self.ts1d_model:
             img_size_dict = {5: (6, 5), 20: (6, 20), 60: (6, 60),
                 7: (6, 7), 30: (6, 30), 90: (6, 90),
+               1: (6, 1),
             }
         else:
             img_size_dict = {5: (1, 32, 15), 20: (1, 64, 60), 60: (1, 96, 180),
                 7: (1, 32, 21), 30: (1, 64, 90), 90: (1, 96, 270),
+               1: (1, 16, 3),
             }
         device = torch.device(
             "cuda:{}".format(0) if torch.cuda.is_available() else "cpu"
@@ -550,7 +554,7 @@ def all_layers(model):
 
 def benchmark_model_summary():
     if IS_CRYPTO:
-        wsls = [7, 30, 90]
+        wsls = [7, 30, 90] + [1]
     else:
         wsls = [5, 20, 60]
     for ws in wsls:

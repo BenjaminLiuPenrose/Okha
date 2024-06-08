@@ -29,7 +29,7 @@ class DrawOHLC(object):
             self.df = df[["Open", "High", "Low", "Close"] + self.ma_name_list].abs()
 
         self.ohlc_len = len(df)
-        assert self.ohlc_len in [5, 20, 60] + [7, 30, 90]
+        assert self.ohlc_len in [5, 20, 60] + [1, 7, 30, 90]
         self.minp = self.df.min().min()
         self.maxp = self.df.max().max()
 

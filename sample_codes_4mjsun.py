@@ -19,7 +19,7 @@ if __name__ == "__main__":
     vb = True
     for year in year_list:
         for freq in ["week", "month", "quarter", 
-            # "day"
+            "day"
             ]:
             print(f"{ws}D {freq} {chart_type} {year}")
             dgp_obj = GenerateStockData(
@@ -41,17 +41,17 @@ if __name__ == "__main__":
 
     # Train CNN Models for US
     # CNN2D
-    # train_us_model(
-    #     [30],
-    #     [1],
-    #     total_worker=1,
-    #     calculate_portfolio=True,
-    #     ts1d_model=False,
-    #     ts_scale="image_scale",
-    #     regression_label=None,
-    #     pf_delay_list=[0],
-    #     lr=1e-4,
-    # )
+    train_us_model(
+        [30],
+        [1],
+        total_worker=1,
+        calculate_portfolio=True,
+        ts1d_model=False,
+        ts_scale="image_scale",
+        regression_label=None,
+        pf_delay_list=[0],
+        lr=1e-4,
+    )
     train_us_model(
         [30],
         [7],
