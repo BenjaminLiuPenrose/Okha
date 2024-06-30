@@ -11,7 +11,6 @@ torch.set_num_threads(1)
 if __name__ == "__main__":
     # Generate Image Data
     year_list = list(range(2022, 2025))
-    year_list = list(range(2020, 2025))
     chart_type = "bar"
     ws = 20
     ws = 30

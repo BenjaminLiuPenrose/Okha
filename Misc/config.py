@@ -15,7 +15,7 @@ LATEX_DIR = get_dir(os.path.join(EXP_DIR, "latex"))
 LIGHT_CSV_RES_DIR = get_dir(os.path.join(WORK_DIR, "torch_ta/ta/csv_res/"))
 
 IS_CRYPTO = True
-IS_HF_CRYPTO = False
+IS_HF_CRYPTO = False # True
 BATCH_SIZE = 128
 TRUE_DATA_CNN_INPLANES = 64
 if IS_CRYPTO:
@@ -83,6 +83,9 @@ IS_YEARS = list(range(1993, 2001))
 OOS_YEARS = list(range(2001, 2020))
 IS_YEARS = list(range(2022, 2024))
 OOS_YEARS = list(range(2024, 2025))
+OOS_YEARS = list(range(2023, 2025))
+
+IS_YEARS = list(range(2020, 2024))
 OOS_YEARS = list(range(2023, 2025))
 
 BENCHMARK_MODEL_NAME_DICT = {

@@ -6,6 +6,7 @@ import sys
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
+from pdb import set_trace
 
 from Data import equity_data as eqd
 from Data import crypto_data as cpd
@@ -217,7 +218,7 @@ class GenerateStockData(object):
         last_day = df[df.Date == date].iloc[0]
         feature_dict = {feature: last_day[feature] for feature in stock_df.columns}
         ret_list = ["Ret"] + [f"Ret_{i}d" for i in self.ret_len_list]
-        from pdb import set_trace; set_trace
+        from pdb import set_trace; 
         for ret in ret_list:
             feature_dict[f"{ret}_label"] = (
                 1 if feature_dict[ret] > 0 else 0 if feature_dict[ret] <= 0 else 2
@@ -289,7 +290,7 @@ class GenerateStockData(object):
         self.stock_id_list = np.unique(self.df.index.get_level_values("StockID"))
         dtype_dict, feature_list = self._get_feature_and_dtype_list()
         data_miss = np.zeros(6)
-        const = 365 #60
+        const = 365 #* 24 * 10 #365 #60
         # const = 60
         data_dict = {
             feature: np.empty(len(self.stock_id_list) * const, dtype=dtype_dict[feature])
@@ -514,12 +515,14 @@ class GenerateStockData(object):
             return
 
         data_miss = np.zeros(6)
+        const = 365 #* 24 * 10
+        # set_trace()
         data_dict = {
-            feature: np.empty(len(self.stock_id_list) * 365, dtype=dtype_dict[feature])
+            feature: np.empty(len(self.stock_id_list) * const, dtype=dtype_dict[feature])
             for feature in feature_list
         }
         data_dict["predictor"] = np.empty(
-            [len(self.stock_id_list) * 365, 6, self.window_size], dtype=np.float32
+            [len(self.stock_id_list) * const, 6, self.window_size], dtype=np.float32
         )
         data_dict["predictor"].fill(np.nan)
 
